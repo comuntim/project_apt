@@ -4,13 +4,14 @@
 
 //using namespace std;
 
-MyTcpServer::~MyTcpServer()
+MyTcpServer::~MyTcpServer() // Деструктор
 {
     //mTcpSocket->close();
     mTcpServer->close();
     server_status=0;
 }
-MyTcpServer::MyTcpServer(QObject *parent) : QObject(parent){
+MyTcpServer::MyTcpServer(QObject *parent) : QObject(parent) // Конструктор
+{
     mTcpServer = new QTcpServer(this);
     connect(mTcpServer, &QTcpServer::newConnection,
             this, &MyTcpServer::slotNewConnection);
@@ -25,12 +26,14 @@ MyTcpServer::MyTcpServer(QObject *parent) : QObject(parent){
 
 void MyTcpServer::slotNewConnection(){
     if(server_status==1){
-        mTcpSocket = mTcpServer->nextPendingConnection();
-        mTcpSocket->write("I am!!!!!!!!!!!!! NOT !!!!!!!!!!!!!!!!echo server!\r\n");
-        connect(mTcpSocket, &QTcpSocket::readyRead,
-                this,&MyTcpServer::slotServerRead);
-        connect(mTcpSocket,&QTcpSocket::disconnected,
-                this,&MyTcpServer::slotClientDisconnected);
+        mTcpSocket = mTcpServer->nextPendingConnection(); // Инициализация сокета
+        mTcpSocket->write("I am!!!!!!!!!!!!! NOT !!!!!!!!!!!!!!!!echo server!\r\n"); // Выводим сообщение пользователю
+        
+        connect(mTcpSocket, &QTcpSocket::readyRead,             // коннект на получение сообщения
+                this,&MyTcpServer::slotServerRead);             // при срабатывании запускаем slotServerRead
+        
+        connect(mTcpSocket,&QTcpSocket::disconnected,           // коннект на отключение сокета
+                this,&MyTcpServer::slotClientDisconnected);     // при срабатывании запускаем slotClientDisconnected
     }
 }
 
