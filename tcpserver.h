@@ -23,7 +23,7 @@ public slots:
     //void slotReadClient();
 private:                                // Создание приватных свойств 
     QTcpServer * TcpServer;
-    QMap<int, QTcpSocket*> TcpSocket; // Созданий списка (ассоциативного массива map) сокетов
+    QTcpSocket * TcpSocket;     // Созданий списка (ассоциативного массива map) сокетов
     int server_status;
 };
 #endif // TCPSERVER_H
