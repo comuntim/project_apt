@@ -6,17 +6,17 @@
 
 MyTcpServer::~MyTcpServer() // Деструктор
 {
-    //mTcpSocket->close();
-    mTcpServer->close();
+    //TcpSocket->close();
+    TcpServer->close();
     server_status=0;
 }
 MyTcpServer::MyTcpServer(QObject *parent) : QObject(parent) // Конструктор
 {
-    mTcpServer = new QTcpServer(this);
-    connect(mTcpServer, &QTcpServer::newConnection,
+    TcpServer = new QTcpServer(this);
+    connect(TcpServer, &QTcpServer::newConnection,
             this, &MyTcpServer::slotNewConnection);
 
-    if(!mTcpServer->listen(QHostAddress::Any, 33333)){
+    if(!TcpServer->listen(QHostAddress::Any, 33333)){
         qDebug() << "server is not started";
     } else {
         server_status=1;
@@ -26,36 +26,36 @@ MyTcpServer::MyTcpServer(QObject *parent) : QObject(parent) // Конструк�
 
 void MyTcpServer::slotNewConnection(){
     if(server_status==1){
-        mTcpSocket = mTcpServer->nextPendingConnection(); // Инициализация сокета
-        mTcpSocket->write("I am!!!!!!!!!!!!! NOT !!!!!!!!!!!!!!!!echo server!\r\n"); // Выводим сообщение пользователю
+        TcpSocket = mTcpServer->nextPendingConnection(); // Инициализация сокета
+        TcpSocket->write("I am!!!!!!!!!!!!! NOT !!!!!!!!!!!!!!!!echo server!\r\n"); // Выводим сообщение пользователю
         
-        connect(mTcpSocket, &QTcpSocket::readyRead,             // коннект на получение сообщения
+        connect(TcpSocket, &QTcpSocket::readyRead,             // коннект на получение сообщения
                 this,&MyTcpServer::slotServerRead);             // при срабатывании запускаем slotServerRead
         
-        connect(mTcpSocket,&QTcpSocket::disconnected,           // коннект на отключение сокета
+        connect(TcpSocket,&QTcpSocket::disconnected,           // коннект на отключение сокета
                 this,&MyTcpServer::slotClientDisconnected);     // при срабатывании запускаем slotClientDisconnected
     }
 }
 
 void MyTcpServer::slotServerRead(){
     std::string command;
-    while(mTcpSocket->bytesAvailable()>0)
+    while(TcpSocket->bytesAvailable()>0)
     {
-        QByteArray symb = mTcpSocket->readAll();
+        QByteArray symb = TcpSocket->readAll();
         command = symb.trimmed().toStdString();
     }
 
     if (command == "auth")
-        mTcpSocket->write("Authorization\r\n");
+        TcpSocket->write("Authorization\r\n");
     else if (command == "reg")
-        mTcpSocket->write("Registration\r\n");
+        TcpSocket->write("Registration\r\n");
     else if (command[0] == '/')
-        mTcpSocket->write("Send command\r\n");
+        TcpSocket->write("Send command\r\n");
     else if (command == "disconnect")
             slotClientDisconnected();
 
 }
 
 void MyTcpServer::slotClientDisconnected(){
-    mTcpSocket->close();
+    TcpSocket->close();
 }
