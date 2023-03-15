@@ -16,14 +16,14 @@ public:
     explicit MyTcpServer(QObject *parent = nullptr); // Конструктор
     ~MyTcpServer();                                  // Деструктор
 public slots:
-    void slotNewConnection();          
+    void slotNewConnection();
     void slotClientDisconnected();
 
     void slotServerRead();
     //void slotReadClient();
-private:                                // Создание приватных свойств 
+private:                                // Создание приватных свойств
     QTcpServer * TcpServer;
-    QTcpSocket * TcpSocket;     // Созданий списка (ассоциативного массива map) сокетов
+    QMap<int, QTcpSocket*> TcpSocket; // Созданий списка (ассоциативного массива map) сокетов
     int server_status;
 };
 #endif // TCPSERVER_H
