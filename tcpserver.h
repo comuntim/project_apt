@@ -7,22 +7,23 @@
 #include <QtNetwork>
 #include <QByteArray>
 #include <QDebug>
+#include <QMap>
 
 class MyTcpServer : public QObject
 {
     Q_OBJECT
 public:
-    explicit MyTcpServer(QObject *parent = nullptr);
-    ~MyTcpServer();
+    explicit MyTcpServer(QObject *parent = nullptr); // Конструктор
+    ~MyTcpServer();                                  // Деструктор
 public slots:
-    void slotNewConnection();
+    void slotNewConnection();          
     void slotClientDisconnected();
 
     void slotServerRead();
     //void slotReadClient();
-private:
-    QTcpServer * mTcpServer;
-    QTcpSocket * mTcpSocket;
+private:                                // Создание приватных свойств 
+    QTcpServer * TcpServer;
+    QMap<int, QTcpSocket*> TcpSocket; // Созданий списка (ассоциативного массива map) сокетов
     int server_status;
 };
 #endif // TCPSERVER_H
