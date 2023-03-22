@@ -1,5 +1,5 @@
 #include <QCoreApplication>
-#include "server.h"
+#include "tcpserver.h"
 
 int main(int argc, char *argv[])
 {
