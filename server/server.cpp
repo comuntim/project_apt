@@ -2,6 +2,7 @@
 const int port = 33333;
 
 
+
 MyTcpServer::MyTcpServer() // Конструктор
 {
     if(this->listen(QHostAddress::Any, port)){
@@ -22,14 +23,14 @@ void MyTcpServer::incomingConnection(qintptr socketDescriptor){
 
         another_Socket -> write("I am start!\r\n");             // Выводим сообщение пользователю
 
+        qDebug() << "Connect client: " << socketDescriptor;      // Вывод идентификатора подключённого клиента
         connect(another_Socket, &QTcpSocket::readyRead,         // коннект на получение сообщения
                 this, &MyTcpServer::slotServerRead);            // при срабатывании запускаем slotServerRead
 
         connect(another_Socket, &QTcpSocket::disconnected,      // коннект на отключение сокета
-                this, &QTcpSocket::deleteLater);                // при срабатывании запускаем deleteLater
+                this, &MyTcpServer::slotClientDisconnected);                // при срабатывании запускаем deleteLater
 
         Sockets.push_back(another_Socket);                      // Добавление нового сокета в список сокетов
-        qDebug() << "Connect client: " << socketDescriptor;     // Вывод идентификатора подключённого клиента
 
         /*
         Sockets[another_Socket->socketDescriptor()] = another_Socket;  Добавление нового сокета в список сокетов
@@ -56,12 +57,17 @@ void MyTcpServer::slotServerRead(){
     else if (command == "/log")
         qDebug() << another_Socket << "\r\n";
     else if (command[0] == '/')
-        another_Socket -> write("Detected command\r\n");
+        another_Socket -> write("Detected command type /<command>\r\n");
     else if (command == "disconnect")
     {
-        another_Socket -> write("U r Disconnected\r\nBye Bye\r\n");
-        deleteLater();
+        another_Socket -> write("\r\nU r Disconnected\r\nBye Bye\r\n\r\n");
+        slotClientDisconnected();
     }
     else
         another_Socket -> write("This is not a command\r\n");
+}
+
+
+void MyTcpServer::slotClientDisconnected(){
+    another_Socket->disconnect();
 }

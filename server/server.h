@@ -18,6 +18,7 @@ public:
 
 public slots:
     void incomingConnection(qintptr socketDescriptor);
+    void slotClientDisconnected();
 
     void slotServerRead();
     //void slotReadClient();
