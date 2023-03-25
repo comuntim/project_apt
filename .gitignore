@@ -1,0 +1,6 @@
+# папки с билдом
+/build-server-Desktop_Qt_6_4_2_MinGW_64_bit-Debug/
+/build-server-Desktop_Qt_6_4_2_MinGW_64_bit-Profile/
+/build-server-Desktop_Qt_6_4_2_MinGW_64_bit-Release/
+
+/server/server.pro.user
