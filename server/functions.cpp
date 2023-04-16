@@ -15,20 +15,17 @@ QString parsing(QByteArray inputString_arr){
     inputString_list.pop_front(); //удаляет имя функции из списка NameOfFunc
 
     if (NameOfFunc == "auth")
-        return auth(inputString_list.at(1), inputString_list.at(2));
+        return auth(inputString_list.at(0), inputString_list.at(1));
     if (NameOfFunc == "reg")
-        return reg(inputString_list.at(1), inputString_list.at(2));
+        return reg(inputString_list.at(0), inputString_list.at(1));
 
-
-
-
-
+    return "";
 }
 
 QString auth(QString log, QString pas){
-    return "authorization";
+    return "authorization\n";
 }
 
 QString reg(QString log, QString pas){
-    return "registration";
+    return "registration\n";
 }

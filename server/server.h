@@ -9,6 +9,8 @@
 #include <QDebug>
 #include <QVector>
 
+#include "functions.h"
+
 class MyTcpServer : public QTcpServer
 {
     Q_OBJECT

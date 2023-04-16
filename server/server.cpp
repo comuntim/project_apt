@@ -1,4 +1,5 @@
 #include "server.h"
+
 const int port = 33333;
 
 
@@ -39,32 +40,19 @@ void MyTcpServer::incomingConnection(qintptr socketDescriptor){
 }
 
 void MyTcpServer::slotServerRead(){
+
     another_Socket = (QTcpSocket*)sender();         // Инициализация нового сокета
     std::string command;
 
+    QString res = "";
     //qDebug() << Sockets << "\r\n";    // TEST LINE
-
     while(another_Socket->bytesAvailable()>0)
     {
-        QByteArray symb = another_Socket->readAll();
-        command = symb.trimmed().toStdString();
+        QByteArray array = another_Socket->readAll();
+        res.append(array);
     }
+    another_Socket -> write(parsing(res.toUtf8()).toUtf8());
 
-    if (command == "auth")
-        another_Socket -> write("Authorization\r\n");
-    else if (command == "reg")
-        another_Socket -> write("Registration\r\n");
-    else if (command == "/log")
-        qDebug() << another_Socket << "\r\n";
-    else if (command[0] == '/')
-        another_Socket -> write("Detected command type /<command>\r\n");
-    else if (command == "disconnect")
-    {
-        another_Socket -> write("\r\nU r Disconnected\r\nBye Bye\r\n\r\n");
-        slotClientDisconnected();
-    }
-    else
-        another_Socket -> write("This is not a command\r\n");
 }
 
 
