@@ -2,6 +2,7 @@ QT -= gui # Отключение графической оболочки
 
 QT += network # Для работы с сетью
 QT += widgets
+QT += sql
 
 
 CONFIG += c++11 console # Конфигурация: версия с++ и тип приложения
@@ -10,8 +11,10 @@ CONFIG -= app_bundle
 DEFINES += QT_DEPRECATED_WARNINGS # Игнорирование WARNING'ов при запуске
 
 SOURCES += \ # Подключаем файлы исходного кода
+    functions.cpp \
     main.cpp \
-    server.cpp
+    server.cpp \
+    singleton.cpp
 
 
 # Default rules for deployment.
@@ -20,5 +23,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \  # Подключаем заголовочные файлы
-    server.h
+    functions.h \
+    server.h \
+    singleton.h
 
