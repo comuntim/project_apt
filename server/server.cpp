@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #include "server.h"
 
 const int port = 33333;
@@ -57,11 +56,6 @@ void MyTcpServer::slotServerRead(){
 }
 
 
-=======
-
-
-
->>>>>>> testing
 void MyTcpServer::slotClientDisconnected(){
     another_Socket->disconnect();
 }
