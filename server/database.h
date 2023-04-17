@@ -1,3 +1,7 @@
+#ifndef DATABASE_H
+#define DATABASE_H
+
+
 #include <QSqlDatabase>
 #include <QDebug>
 #include <QCoreApplication> //библиотека для консоли
@@ -9,36 +13,36 @@
 #include <QSqlRecord> //для работы с ОДНОЙ отдельной записью в БД
 
 //Улучшенная реализация
-class Singleton; //чтоб не ставить потом Singleton::
+class DataBase; //чтоб не ставить потом Singleton::
 
 //переменная p_instance используется для хранения единственного экземпляра класса
 //пересенная destroyer - для удаления этого экземпляра при завершении программы
 
-class SingletonDestroyer
+class DataBaseDestroyer
 {
     private:
-        Singleton * p_instance; //ссылка на наш объект
+        DataBase * DataBasePointer; //ссылка на наш объект
     public:
-        ~SingletonDestroyer() { delete p_instance;}
-        void initialize(Singleton * p){p_instance = p;}; //присваивает ту ссылку, которая свойство класса к той ссылке, что мы получили арументом
+        ~DataBaseDestroyer() { delete DataBasePointer;}
+        void initialize(DataBase * p){DataBasePointer = p;}; //присваивает ту ссылку, которая свойство класса к той ссылке, что мы получили арументом
 };
 
 
-class Singleton
+class DataBase
 {
     private:
         //переменная static существует в единтсвенном экземпляре на весь класс
-        static Singleton * p_instance; //* хранит адрес объекта (указатель на объект этого класса); объект, который ссылается на этот объект
-        static SingletonDestroyer destroyer; //объект, который уничтожает этот объект
+        static DataBase * p_instance; //* хранит адрес объекта (указатель на объект этого класса); объект, который ссылается на этот объект
+        static DataBaseDestroyer destroyer; //объект, который уничтожает этот объект
         //database db
     protected:
-        Singleton(){} //конструктор по умолчанию
+        DataBase(){} //конструктор по умолчанию
 
 
-        Singleton(const Singleton&); //копирующий конструктор(копирует все экземпляры класса)
+        DataBase(const DataBase&); //копирующий конструктор(копирует все экземпляры класса)
         //делает запрет на создание новых экземпляров класса путем копирования существующего экземпляра
-        Singleton& operator = (Singleton &); //оператор присваивания; копия объектов класса самих в себя (прям пониятия не имею зачем эта срока)
-        ~Singleton() {} //деструктор singleton
+        DataBase& operator = (DataBase &); //оператор присваивания; копия объектов класса самих в себя (прям пониятия не имею зачем эта срока)
+        ~DataBase() {} //деструктор singleton
             //db.close();
             //закрытие
         friend class SingletonDestroyer; //означает, что класс SingletonDestroyer будет иметь доступ к private и protected класса Singleton
@@ -46,10 +50,10 @@ class Singleton
 
     public:
 
-        static Singleton* getInstance(){ //метод позволяет получить доступ к единственному экземпляру класса Singleton
+        static DataBase* getInstance(){ //метод позволяет получить доступ к единственному экземпляру класса Singleton
             if (!p_instance) //если экземпляр класса еще не создан
             {
-                p_instance = new Singleton();
+                p_instance = new DataBase();
                 destroyer.initialize(p_instance); //инициализирует desroyer, чтобы singleton был нормально удален
             }
             return p_instance;
@@ -92,3 +96,6 @@ Singleton* Singleton::p_instance = 0;
 SingletonDestroyer Singleton::destroyer;
 Singleton * SingletonDestroyer::p_instance; //эти строки нужны просто для реализации паттерна singleton
 */
+
+
+#endif // DATABASE_H
