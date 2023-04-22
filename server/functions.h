@@ -3,7 +3,7 @@
 
 #include <QString>
 
-QString parsing(QByteArray inputString);
+QString parsing(QString inputString);
 
 QString auth(QString log, QString pas);
 QString reg(QString log, QString pas);

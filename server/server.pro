@@ -11,11 +11,9 @@ CONFIG -= app_bundle
 DEFINES += QT_DEPRECATED_WARNINGS # Игнорирование WARNING'ов при запуске
 
 SOURCES += \ # Подключаем файлы исходного кода
-    database.cpp \
     functions.cpp \
     main.cpp \
-    server.cpp \
-    singleton.cpp
+    server.cpp
 
 
 # Default rules for deployment.
@@ -26,6 +24,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \  # Подключаем заголовочные файлы
     database.h \
     functions.h \
-    server.h \
-    singleton.h
+    server.h
 

@@ -1,5 +1,9 @@
 #ifndef SERVER_H
 #define SERVER_H
+
+#include "database.h"
+#include "functions.h"
+
 #include <QObject>
 #include <QTcpServer>
 #include <QTcpSocket>
@@ -9,7 +13,6 @@
 #include <QDebug>
 #include <QVector>
 
-#include "functions.h"
 
 class MyTcpServer : public QTcpServer
 {
