@@ -30,7 +30,7 @@ class DataBase
         DataBase& operator = (DataBase &) = delete;
         ~DataBase() {db.close();}
 
-        friend class SingletonDestroyer;
+        friend class DataBaseDestroyer;
     public:
         static DataBase* getInstance(){
             if (!p_instance)
