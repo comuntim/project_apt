@@ -3,9 +3,9 @@
 
 #include <QDebug>
 #include <QSqlDatabase>
-//#include <QSqlQuery>
+#include <QSqlQuery>
 #include <QSqlError>
-//#include <QSqlRecord>
+#include <QSqlRecord>
 
 class DataBase;
 class DataBaseDestroyer
@@ -24,6 +24,7 @@ class DataBase
         static DataBase * p_instance;
         static DataBaseDestroyer destroyer;
         QSqlDatabase db;
+        QSqlQuery query;
     protected:
         DataBase(){
             db = QSqlDatabase::addDatabase("QSQLITE");
@@ -49,7 +50,16 @@ class DataBase
             return p_instance;
         }
         // далее функция для коннекта с бд
-        QString sendQuerry(QString str) {return "dskjd";}
+        QString sendQuerry(QString str) {
+            QSqlQuery query;
+
+            query.prepare(str);
+
+            if (!query.exec())
+                return query.lastError().text();
+            return QString();
+        }
+
 };
 
 

@@ -12,6 +12,15 @@ QString parsing(QString inputString){
     QString NameOfFunc = inputString_list.front();
     inputString_list.pop_front(); //удаляет имя функции из списка NameOfFunc
 
+    QString createTableQuery = "CREATE TABLE IF NOT EXISTS MyTable ("
+                                           "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                                           "login VARCHAR(50) NOT NULL, "
+                                           "pass VARCHAR(50) NOT NULL"
+                                           ");";
+
+    if (NameOfFunc == "create")
+        return create(createTableQuery);
+
     if (NameOfFunc == "auth")
         return auth(inputString_list.at(0), inputString_list.at(0));
     if (NameOfFunc == "reg")
@@ -21,6 +30,12 @@ QString parsing(QString inputString){
 
 
 }
+
+QString create(QString str){
+    DataBase::getInstance()->sendQuerry(str);
+    return "created \r\n";
+}
+
 
 QString auth(QString log, QString pas){
     DataBase::getInstance()->sendQuerry("kslaks");
