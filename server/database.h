@@ -25,7 +25,14 @@ class DataBase
         static DataBaseDestroyer destroyer;
         QSqlDatabase db;
     protected:
-        DataBase(){}
+        DataBase(){
+            db = QSqlDatabase::addDatabase("QSQLITE");
+            db.setDatabaseName("Data.db");
+
+            if(!db.open())
+                qDebug()<<p_instance->db.lastError().text();
+
+        }
         DataBase(const DataBase& ) = delete;
         DataBase& operator = (DataBase &) = delete;
         ~DataBase() {db.close();}
@@ -36,18 +43,14 @@ class DataBase
             if (!p_instance)
             {
                 p_instance = new DataBase();
-                p_instance->db = QSqlDatabase::addDatabase("QSQLITE");
-                p_instance->db.setDatabaseName("Data.db");
-
-                if(!p_instance->db.open())
-                    qDebug()<<p_instance->db.lastError().text();
 
                 destroyer.initialize(p_instance);
             }
             return p_instance;
         }
         // далее функция для коннекта с бд
-        static QString sendQuerry(QString str) {return "dskjd";}
+        QString sendQuerry(QString str) {return "dskjd";}
 };
+
 
 #endif // DATABASE_H

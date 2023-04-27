@@ -1,7 +1,7 @@
 #ifndef SERVER_H
 #define SERVER_H
 
-#include "database.h"
+
 #include "functions.h"
 
 #include <QObject>

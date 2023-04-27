@@ -5,7 +5,6 @@ const int port = 33333;
 
 MyTcpServer::MyTcpServer() // Конструктор
 {
-    //DataBase::getInstance();
     if(this->listen(QHostAddress::Any, port)){
         server_status=1;
         qDebug() << "\r\nserver is started in port #" << port;

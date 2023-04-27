@@ -1,8 +1,5 @@
 #include "functions.h"
-#include "database.h"
 
-#include <QString>
-#include <QStringList>
 
 QString parsing(QString inputString){
     /* InputString = "NameOfFunc&Arg1&arg2"
@@ -26,7 +23,7 @@ QString parsing(QString inputString){
 }
 
 QString auth(QString log, QString pas){
-    DataBase::sendQuerry("kslaks");
+    DataBase::getInstance()->sendQuerry("kslaks");
     return "authorization \r\n";
 }
 

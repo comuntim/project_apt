@@ -2,6 +2,8 @@
 #define FUNCTIONS_H
 
 #include <QString>
+#include "database.h"
+#include <QStringList>
 
 QString parsing(QString inputString);
 
