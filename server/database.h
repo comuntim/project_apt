@@ -24,7 +24,6 @@ class DataBase
         static DataBase * p_instance;
         static DataBaseDestroyer destroyer;
         QSqlDatabase db;
-        QSqlQuery query;
     protected:
         DataBase(){
             db = QSqlDatabase::addDatabase("QSQLITE");
@@ -33,6 +32,13 @@ class DataBase
             if(!db.open())
                 qDebug()<<p_instance->db.lastError().text();
 
+            QString createTableQuery = "CREATE TABLE IF NOT EXISTS data ("
+                                            "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                                            "login VARCHAR(50) NOT NULL, "
+                                            "pass VARCHAR(50) NOT NULL"
+                                            ");";
+            QSqlQuery query(db);
+            query.exec(createTableQuery);
         }
         DataBase(const DataBase& ) = delete;
         DataBase& operator = (DataBase &) = delete;
@@ -46,14 +52,14 @@ class DataBase
                 p_instance = new DataBase();
 
                 destroyer.initialize(p_instance);
+
             }
             return p_instance;
         }
         // далее функция для коннекта с бд
         QString sendQuerry(QString str) {
-            QSqlQuery query;
-
-            query.prepare(str);
+            QSqlQuery query(db);
+            query.exec(str);
 
             if (!query.exec())
                 return query.lastError().text();

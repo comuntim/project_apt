@@ -12,36 +12,39 @@ QString parsing(QString inputString){
     QString NameOfFunc = inputString_list.front();
     inputString_list.pop_front(); //удаляет имя функции из списка NameOfFunc
 
-    QString createTableQuery = "CREATE TABLE IF NOT EXISTS MyTable ("
-                                           "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                                           "login VARCHAR(50) NOT NULL, "
-                                           "pass VARCHAR(50) NOT NULL"
-                                           ");";
-
-    if (NameOfFunc == "create")
-        return create(createTableQuery);
 
     if (NameOfFunc == "auth")
-        return auth(inputString_list.at(0), inputString_list.at(0));
+        return auth(inputString_list.at(0), inputString_list.at(1));
     if (NameOfFunc == "reg")
-        return reg(inputString_list.at(0), inputString_list.at(0));
+        return reg(inputString_list.at(0), inputString_list.at(1));
 
     return 0;
 
 
 }
 
-QString create(QString str){
-    DataBase::getInstance()->sendQuerry(str);
-    return "created \r\n";
+
+QString auth(QString log, QString pass){
+    QString querry =
+            QString("SELECT * FROM data WHERE login='%1' AND pass='%2'").arg(log).arg(pass);
+
+    QString result = DataBase::getInstance()->sendQuerry(querry);
+    qDebug() << result;
+    if (result.isEmpty())
+        return "authorization completed \r\n";
+    else
+        return "error \r\n";
 }
 
+QString reg(QString log, QString pass){
+    QString querry =
+            QString("INSERT INTO data (login, pass) VALUES ('%1', '%2');").arg(log).arg(pass);
 
-QString auth(QString log, QString pas){
-    DataBase::getInstance()->sendQuerry("kslaks");
-    return "authorization \r\n";
-}
-
-QString reg(QString log, QString pas){
-    return "registration \r\n";
+    qDebug() << querry;
+    QString result = DataBase::getInstance()->sendQuerry(querry);
+    qDebug() << result;
+    if (result.isEmpty())
+        return "registration \r\n";
+    else
+        return "error \r\n";
 }

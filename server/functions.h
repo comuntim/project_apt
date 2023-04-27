@@ -6,7 +6,6 @@
 #include <QStringList>
 
 QString parsing(QString inputString);
-QString create(QString str);
 
 QString auth(QString log, QString pas);
 QString reg(QString log, QString pas);
