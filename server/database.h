@@ -32,6 +32,7 @@ class DataBase
             if(!db.open())
                 qDebug()<<p_instance->db.lastError().text();
 
+
             QString createTableQuery = "CREATE TABLE IF NOT EXISTS data ("
                                             "id INTEGER PRIMARY KEY AUTOINCREMENT, "
                                             "login VARCHAR(50) NOT NULL, "
@@ -39,6 +40,7 @@ class DataBase
                                             ");";
             QSqlQuery query(db);
             query.exec(createTableQuery);
+
         }
         DataBase(const DataBase& ) = delete;
         DataBase& operator = (DataBase &) = delete;
@@ -59,11 +61,17 @@ class DataBase
         // далее функция для коннекта с бд
         QString sendQuerry(QString str) {
             QSqlQuery query(db);
-            query.exec(str);
+            //query.exec(str); это не надо, так как exec в любом случае в if есть
 
-            if (!query.exec())
+            if (!query.exec(str))
                 return query.lastError().text();
-            return QString();
+            QString res = "";
+            int cols = query.record().count();
+            while (query.next()) {
+                for (int i = 0; i < cols; i += 1)
+                res.append(query.value(i).toString()).append(" ");
+            }
+            return res;
         }
 
 };

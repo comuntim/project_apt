@@ -25,22 +25,22 @@ QString parsing(QString inputString){
 
 
 QString auth(QString log, QString pass){
-    QString querry =
+    QString query =
             QString("SELECT * FROM data WHERE login='%1' AND pass='%2'").arg(log).arg(pass);
 
-    QString result = DataBase::getInstance()->sendQuerry(querry);
+    QString result = DataBase::getInstance()->sendQuerry(query);
     qDebug() << result;
     if (result.isEmpty())
-        return "authorization completed \r\n";
+        return "auth- error \r\n";
     else
-        return "error \r\n";
+        return "auth+ "+ log+"\r\n";
 }
+
 
 QString reg(QString log, QString pass){
     QString querry =
             QString("INSERT INTO data (login, pass) VALUES ('%1', '%2');").arg(log).arg(pass);
 
-    qDebug() << querry;
     QString result = DataBase::getInstance()->sendQuerry(querry);
     qDebug() << result;
     if (result.isEmpty())
