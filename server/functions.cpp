@@ -1,34 +1,50 @@
 #include "functions.h"
 
-#include <QString>
-#include <QStringList>
 
-QString parsing(QByteArray inputString_arr){
+QString parsing(QString inputString){
     /* InputString = "NameOfFunc&Arg1&arg2"
        хотим возвратить NameOfFunc (Arg1, arg2);
     */
 
-    QString inputString_str = QString(inputString_arr);
-    //QStringList inputString_list = inputString_str.split(QLatin1Char("&"));    НЕ РАБОТАЕТ СТРОКА
-    QStringList inputString_list = inputString_str.split('&');
+    qDebug() << inputString;
+    QStringList inputString_list = inputString.split('&');
+    qDebug() << inputString_list;
     QString NameOfFunc = inputString_list.front();
     inputString_list.pop_front(); //удаляет имя функции из списка NameOfFunc
 
+
     if (NameOfFunc == "auth")
-        return auth(inputString_list.at(1), inputString_list.at(2));
+        return auth(inputString_list.at(0), inputString_list.at(1));
     if (NameOfFunc == "reg")
-        return reg(inputString_list.at(1), inputString_list.at(2));
+        return reg(inputString_list.at(0), inputString_list.at(1));
 
-
-
+    return 0;
 
 
 }
 
-QString auth(QString log, QString pas){
-    return "authorization";
+
+QString auth(QString log, QString pass){
+    QString query =
+            QString("SELECT * FROM data WHERE login='%1' AND pass='%2'").arg(log).arg(pass);
+
+    QString result = DataBase::getInstance()->sendQuerry(query);
+    qDebug() << result;
+    if (result.isEmpty())
+        return "auth- error \r\n";
+    else
+        return "auth+ "+ log+"\r\n";
 }
 
-QString reg(QString log, QString pas){
-    return "registration";
+
+QString reg(QString log, QString pass){
+    QString querry =
+            QString("INSERT INTO data (login, pass) VALUES ('%1', '%2');").arg(log).arg(pass);
+
+    QString result = DataBase::getInstance()->sendQuerry(querry);
+    qDebug() << result;
+    if (result.isEmpty())
+        return "registration \r\n";
+    else
+        return "error \r\n";
 }

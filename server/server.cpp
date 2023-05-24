@@ -42,29 +42,21 @@ void MyTcpServer::slotServerRead(){
     another_Socket = (QTcpSocket*)sender();         // Инициализация нового сокета
     std::string command;
 
-    //qDebug() << Sockets << "\r\n";    // TEST LINE
 
     while(another_Socket->bytesAvailable()>0)
     {
         QByteArray symb = another_Socket->readAll();
         command = symb.trimmed().toStdString();
     }
+    QString res =  QString::fromStdString(command);
 
-    if (command == "auth")
-        another_Socket -> write("Authorization\r\n");
-    else if (command == "reg")
-        another_Socket -> write("Registration\r\n");
-    else if (command == "/log")
-        qDebug() << another_Socket << "\r\n";
-    else if (command[0] == '/')
-        another_Socket -> write("Detected command type /<command>\r\n");
-    else if (command == "disconnect")
-    {
-        another_Socket -> write("\r\nU r Disconnected\r\nBye Bye\r\n\r\n");
-        slotClientDisconnected();
-    }
+    if (res == "disconnect")
+        {
+            another_Socket -> write("\r\nU r Disconnected\r\nBye Bye\r\n\r\n");
+            slotClientDisconnected();
+        }
     else
-        another_Socket -> write("This is not a command\r\n");
+        another_Socket -> write(parsing(res.toUtf8()).toUtf8());
 }
 
 
