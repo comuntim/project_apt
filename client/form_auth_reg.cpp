@@ -1,6 +1,10 @@
 #include "form_auth_reg.h"
 #include "ui_form_auth_reg.h"
 
+static QString serv_addr = "127.0.0.1";
+const int serv_port = 33333;
+
+
 Form_auth_reg::Form_auth_reg(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Form_auth_reg)
@@ -8,12 +12,28 @@ Form_auth_reg::Form_auth_reg(QWidget *parent) :
     ui->setupUi(this);
     ui->lineEdit_mail->setVisible(false);
     ui->pushButton_cancle->setVisible(false);
+
+    socket = new QTcpSocket(this);
+        connect(socket, SIGNAL(slotClientRead()),this,SLOT(slotClientRead()));
+        connect(socket, SIGNAL(slotDisconnected()),this,SLOT(slotDisconnected()));
+    socket->connectToHost(serv_addr, serv_port);
 }
 
 Form_auth_reg::~Form_auth_reg()
 {
     delete ui;
 }
+
+void Form_auth_reg::slotDisconnected() {
+    socket->deleteLater();
+}
+
+void Form_auth_reg::slotClientRead() {
+
+}
+
+
+
 
 void Form_auth_reg::on_pushButton_register_clicked()
 {
@@ -45,6 +65,8 @@ void Form_auth_reg::on_pushButton_cancle_clicked()
 
 void Form_auth_reg::on_pushButton_enter_clicked()
 {
+    Data = socket->readAll();
+    qDebug() << "data:" << Data;
     QString user_log = ui->lineEdit_log->text();
     QString user_pass = ui->lineEdit_pass->text();
 

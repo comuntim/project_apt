@@ -1,10 +1,12 @@
 #include "functions.h"
+#include "form_auth_reg.h"
 
 
 void authorization(QString log, QString pass){
     QString res = "auth&"+log+"&"+pass;
     qDebug() << res;
-    //Client::sendToServer(res);
+
+//    sendToServer(res);
 }
 
 

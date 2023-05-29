@@ -4,6 +4,9 @@
 #include "functions.h"
 
 #include <QWidget>
+#include <QTcpSocket>
+#include <QMessageBox>
+#include <QDebug>
 
 namespace Ui {
 class Form_auth_reg;
@@ -17,12 +20,19 @@ public:
     explicit Form_auth_reg(QWidget *parent = nullptr);
     ~Form_auth_reg();
 
+    QTcpSocket* socket;
+    QByteArray Data;
+
 private slots:
     void on_pushButton_register_clicked();
 
     void on_pushButton_cancle_clicked();
 
     void on_pushButton_enter_clicked();
+
+
+    void slotDisconnected();
+    void slotClientRead();
 
 signals:
     void return_autrh_reg();
