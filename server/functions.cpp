@@ -31,7 +31,7 @@ QString auth(QString log, QString pass){
     QString result = DataBase::getInstance()->sendQuerry(query);
     qDebug() << result;
     if (result.isEmpty()){
-        qDebug() << "fuck you";
+        qDebug() << "you are not welcome. Run away!";
         return "auth- error \r\n";}
     else{
         qDebug() << "you are welcome";
