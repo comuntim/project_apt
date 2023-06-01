@@ -1,10 +1,12 @@
 #include "functions.h"
 #include "form_auth_reg.h"
+#include "sendtohost.h"
 
 
 void authorization(QString log, QString pass){
     QString res = "auth&"+log+"&"+pass;
     qDebug() << res;
+    sendToHost::getInstance() -> sendClient(res);
 
 //    sendToServer(res);
 }
@@ -13,6 +15,7 @@ void authorization(QString log, QString pass){
 void registration(QString log, QString pass, QString mail){
     QString res = "reg&"+log+"&"+pass+"&"+mail;
     qDebug() << res;
+    sendToHost::getInstance() -> sendClient(res);
     //Client::sendToServer(res);
 }
 

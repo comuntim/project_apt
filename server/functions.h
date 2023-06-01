@@ -8,6 +8,6 @@
 QString parsing(QString inputString);
 
 QString auth(QString log, QString pas);
-QString reg(QString log, QString pas);
+QString reg(QString log, QString pas, QString mail);
 
 #endif // FUNCTIONS_H

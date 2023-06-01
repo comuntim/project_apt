@@ -13,13 +13,15 @@ SOURCES += \
     formtask.cpp \
     functions.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    sendtohost.cpp
 
 HEADERS += \
     form_auth_reg.h \
     formtask.h \
     functions.h \
-    mainwindow.h
+    mainwindow.h \
+    sendtohost.h
 
 FORMS += \
     form_auth_reg.ui \

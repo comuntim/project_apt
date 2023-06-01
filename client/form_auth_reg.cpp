@@ -1,5 +1,6 @@
 #include "form_auth_reg.h"
 #include "ui_form_auth_reg.h"
+#include "sendtohost.h"
 
 static QString serv_addr = "127.0.0.1";
 const int serv_port = 33333;
