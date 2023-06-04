@@ -16,7 +16,7 @@ QString parsing(QString inputString){
     if (NameOfFunc == "auth")
         return auth(inputString_list.at(0), inputString_list.at(1));
     if (NameOfFunc == "reg")
-        return reg(inputString_list.at(0), inputString_list.at(1));
+        return reg(inputString_list.at(0), inputString_list.at(1), inputString_list.at(2));
 
     return 0;
 
@@ -30,16 +30,18 @@ QString auth(QString log, QString pass){
 
     QString result = DataBase::getInstance()->sendQuerry(query);
     qDebug() << result;
-    if (result.isEmpty())
-        return "auth- error \r\n";
-    else
-        return "auth+ "+ log+"\r\n";
+    if (result.isEmpty()){
+        qDebug() << "you are not welcome. Run away!";
+        return "auth- error \r\n";}
+    else{
+        qDebug() << "you are welcome";
+        return "auth+ "+ log+"\r\n";}
 }
 
 
-QString reg(QString log, QString pass){
+QString reg(QString log, QString pass, QString mail){
     QString querry =
-            QString("INSERT INTO data (login, pass) VALUES ('%1', '%2');").arg(log).arg(pass);
+            QString("INSERT INTO data (login, pass, mail) VALUES ('%1', '%2', '%3');").arg(log).arg(pass).arg(mail);
 
     QString result = DataBase::getInstance()->sendQuerry(querry);
     qDebug() << result;

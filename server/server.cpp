@@ -40,15 +40,8 @@ void MyTcpServer::incomingConnection(qintptr socketDescriptor){
 
 void MyTcpServer::slotServerRead(){
     another_Socket = (QTcpSocket*)sender();         // Инициализация нового сокета
-    std::string command;
 
-
-    while(another_Socket->bytesAvailable()>0)
-    {
-        QByteArray symb = another_Socket->readAll();
-        command = symb.trimmed().toStdString();
-    }
-    QString res =  QString::fromStdString(command);
+    QString res = another_Socket->readAll();
 
     if (res == "disconnect")
         {
