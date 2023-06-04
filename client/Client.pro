@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui network sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -13,13 +13,15 @@ SOURCES += \
     formtask.cpp \
     functions.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    sendtohost.cpp
 
 HEADERS += \
     form_auth_reg.h \
     formtask.h \
     functions.h \
-    mainwindow.h
+    mainwindow.h \
+    sendtohost.h
 
 FORMS += \
     form_auth_reg.ui \

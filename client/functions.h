@@ -22,3 +22,4 @@ QString generate_task_3();
 void check_Task(int task_number, QString answer, QString input);
 
 #endif // FUNCTIONS_H
+
