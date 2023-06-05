@@ -1,0 +1,39 @@
+\doxysection{server.\+h}
+\hypertarget{server_8h_source}{}\label{server_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ SERVER\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ SERVER\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}functions.h"{}}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <QObject>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <QTcpServer>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <QTcpSocket>}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <QtNetwork>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <QByteArray>}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <QDebug>}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <QVector>}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_my_tcp_server}{MyTcpServer}}\ :\ \textcolor{keyword}{public}\ QTcpServer}
+\DoxyCodeLine{00018\ \{}
+\DoxyCodeLine{00019\ \ \ \ \ Q\_OBJECT}
+\DoxyCodeLine{00020\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00021\ \ \ \ \ \mbox{\hyperlink{class_my_tcp_server}{MyTcpServer}}();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Конструктор}}
+\DoxyCodeLine{00022\ \ \ \ \ QTcpSocket\ *another\_Socket;\ \textcolor{comment}{//\ Создание\ сокета}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{keyword}{public}\ slots:}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classincoming_connection}{incomingConnection}}(qintptr\ socketDescriptor);}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classslot_client_disconnected}{slotClientDisconnected}}();}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classslot_server_read}{slotServerRead}}();}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{comment}{//void\ slotReadClient();}}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \textcolor{keyword}{private}:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Создание\ приватных\ свойств}}
+\DoxyCodeLine{00045\ \ \ \ \ QVector\ <QTcpSocket*>\ Sockets;\ \ \ \ \ \ \textcolor{comment}{//\ Созданий\ списка\ (ассоциативного\ массива\ map)\ сокетов}}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{int}\ server\_status;}
+\DoxyCodeLine{00047\ \};}
+\DoxyCodeLine{00048\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ SERVER\_H}}
+
+\end{DoxyCode}

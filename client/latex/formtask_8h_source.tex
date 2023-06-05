@@ -1,0 +1,34 @@
+\doxysection{formtask.\+h}
+\hypertarget{formtask_8h_source}{}\label{formtask_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ FORMTASK\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ FORMTASK\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}functions.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <QWidget>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{namespace\ }Ui\ \{}
+\DoxyCodeLine{00008\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_form_task}{FormTask}};}
+\DoxyCodeLine{00009\ \}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_form_task}{FormTask}}\ :\ \textcolor{keyword}{public}\ QWidget}
+\DoxyCodeLine{00012\ \{}
+\DoxyCodeLine{00013\ \ \ \ \ Q\_OBJECT}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_form_task}{FormTask}}(QWidget\ *parent\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00017\ \ \ \ \ \mbox{\hyperlink{class_form_task}{\string~FormTask}}();}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{void}\ set\_task(\textcolor{keywordtype}{int}\ n);}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{private}\ slots:}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{void}\ on\_pushButton\_Okanswer\_clicked();}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00024\ \ \ \ \ Ui::FormTask\ *ui;}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{int}\ task\_num;}
+\DoxyCodeLine{00026\ \ \ \ \ QString\ input;}
+\DoxyCodeLine{00027\ \};}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ FORMTASK\_H}}
+
+\end{DoxyCode}

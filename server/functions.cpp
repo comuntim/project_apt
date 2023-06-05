@@ -1,6 +1,8 @@
 #include "functions.h"
 
 
+
+
 QString parsing(QString inputString){
     /* InputString = "NameOfFunc&Arg1&arg2"
        хотим возвратить NameOfFunc (Arg1, arg2);

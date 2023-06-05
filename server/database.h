@@ -17,7 +17,11 @@ class DataBaseDestroyer
         void initialize(DataBase * p){db_pointer = p;}
 };
 
-
+/*!
+ * \class DataBase
+ * \brief DataBase class - синглтон для баз данных
+ * Создает единичный экземпляр для обращения к базе данных
+ */
 class DataBase
 {
     private:

@@ -1,0 +1,85 @@
+\doxysection{database.\+h}
+\hypertarget{database_8h_source}{}\label{database_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ DATABASE\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ DATABASE\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <QDebug>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <QSqlDatabase>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <QSqlQuery>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <QSqlError>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <QSqlRecord>}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_data_base}{DataBase}};}
+\DoxyCodeLine{00011\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_data_base_destroyer}{DataBaseDestroyer}}}
+\DoxyCodeLine{00012\ \{}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_data_base}{DataBase}}\ *\ db\_pointer;}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_data_base_destroyer}{\string~DataBaseDestroyer}}()\ \{\ \textcolor{keyword}{delete}\ db\_pointer;\}}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ initialize(\mbox{\hyperlink{class_data_base}{DataBase}}\ *\ p)\{db\_pointer\ =\ p;\}}
+\DoxyCodeLine{00018\ \};}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00025\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_data_base}{DataBase}}}
+\DoxyCodeLine{00026\ \{}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_data_base}{DataBase}}\ *\ p\_instance;}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_data_base_destroyer}{DataBaseDestroyer}}\ destroyer;}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ QSqlDatabase\ db;}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_data_base}{DataBase}}()\{}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \ \ \ \ db\ =\ QSqlDatabase::addDatabase(\textcolor{stringliteral}{"{}QSQLITE"{}});}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ db.setDatabaseName(\textcolor{stringliteral}{"{}Data.db"{}});}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(!db.open())}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ qDebug()<<p\_instance-\/>db.lastError().text();}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ \ \ QString\ createTableQuery\ =\ \textcolor{stringliteral}{"{}CREATE\ TABLE\ IF\ NOT\ EXISTS\ data\ ("{}}}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}id\ INTEGER\ PRIMARY\ KEY\ AUTOINCREMENT,\ "{}}}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}login\ VARCHAR(50)\ NOT\ NULL,\ "{}}}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}pass\ VARCHAR(50)\ NOT\ NULL,\ "{}}}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}mail\ VARCHAR(50)\ NOT\ NULL"{}}}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{});"{}};}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ \ \ QSqlQuery\ query(db);}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \ \ \ \ query.exec(createTableQuery);}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_data_base}{DataBase}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_data_base}{DataBase}}\&\ )\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_data_base}{DataBase}}\&\ operator\ =\ (\mbox{\hyperlink{class_data_base}{DataBase}}\ \&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_data_base}{\string~DataBase}}()\ \{db.close();\}}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_data_base_destroyer}{DataBaseDestroyer}};}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_data_base}{DataBase}}*\ getInstance()\{}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!p\_instance)}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ p\_instance\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{class_data_base}{DataBase}}();}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ destroyer.initialize(p\_instance);}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ p\_instance;}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ далее\ функция\ для\ коннекта\ с\ бд}}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ QString\ sendQuerry(QString\ str)\ \{}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ QSqlQuery\ query(db);}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//query.exec(str);\ это\ не\ надо,\ так\ как\ exec\ в\ любом\ случае\ в\ if\ есть}}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!query.exec(str))}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ query.lastError().text();}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ QString\ res\ =\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ cols\ =\ query.record().count();}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (query.next())\ \{}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ cols;\ i\ +=\ 1)}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ res.append(query.value(i).toString()).append(\textcolor{stringliteral}{"{}\ "{}});}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ res;}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ \};}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00085\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ DATABASE\_H}}
+
+\end{DoxyCode}

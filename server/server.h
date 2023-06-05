@@ -22,9 +22,22 @@ public:
     QTcpSocket *another_Socket; // Создание сокета
 
 public slots:
+    /*!
+     * \class incomingConnection
+     * \brief incomingConnection - используется для обработки поступающего подключения
+     * Создает и определяет новый сокет. Выводит сообщение пользователю и устанавливает connect на соединение и отключение
+     */
     void incomingConnection(qintptr socketDescriptor);
+    /*!
+     * \class slotClientDisconnected
+     * \brief slotClientDisconnected - обрабатывает отключение от сервера
+     */
     void slotClientDisconnected();
-
+    /*!
+     * \class slotServerRead
+     * \brief slotServerRead - обрабатывет отключение или проводит parsing
+     * Отправляет данные
+     */
     void slotServerRead();
     //void slotReadClient();
 
