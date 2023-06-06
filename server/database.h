@@ -38,11 +38,12 @@ class DataBase
 
 
             QString createTableQuery = "CREATE TABLE IF NOT EXISTS data ("
-                                            "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                                            "login VARCHAR(50) NOT NULL, "
-                                            "pass VARCHAR(50) NOT NULL, "
-                                            "mail VARCHAR(50) NOT NULL"
-                                            ");";
+                                       "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                                       "login VARCHAR(50) NOT NULL, "
+                                       "pass VARCHAR(50) NOT NULL, "
+                                       "mail VARCHAR(50) NOT NULL, "
+                                       "stat VARCHAR(50) NOT NULL DEFAULT '000'"
+                                       ");";
             QSqlQuery query(db);
             query.exec(createTableQuery);
 

@@ -1,8 +1,6 @@
 #include "functions.h"
 
 
-
-
 QString parsing(QString inputString){
     /* InputString = "NameOfFunc&Arg1&arg2"
        хотим возвратить NameOfFunc (Arg1, arg2);
@@ -19,6 +17,10 @@ QString parsing(QString inputString){
         return auth(inputString_list.at(0), inputString_list.at(1));
     if (NameOfFunc == "reg")
         return reg(inputString_list.at(0), inputString_list.at(1), inputString_list.at(2));
+    if (NameOfFunc == "updstat")
+        return updstat(inputString_list.at(0), inputString_list.at(1), inputString_list.at(2));
+    if (NameOfFunc == "stat")
+        return statisticBd(inputString_list.at(0));
 
     return 0;
 
@@ -34,10 +36,10 @@ QString auth(QString log, QString pass){
     qDebug() << result;
     if (result.isEmpty()){
         qDebug() << "you are not welcome. Run away!";
-        return "auth- error \r\n";}
+        return "auth&-&error";}
     else{
         qDebug() << "you are welcome";
-        return "auth+ "+ log+"\r\n";}
+        return "auth&+&"+log;}
 }
 
 
@@ -48,7 +50,40 @@ QString reg(QString log, QString pass, QString mail){
     QString result = DataBase::getInstance()->sendQuerry(querry);
     qDebug() << result;
     if (result.isEmpty())
-        return "registration \r\n";
+        return "registration";
     else
-        return "error \r\n";
+        return "error";
+}
+
+
+QString updstat(QString log, QString n, QString upd){
+    qDebug() << log << n << upd;
+    QString helpQuerry = QString("SELECT stat FROM data WHERE login='%1'").arg(log);
+    QString helpStatistic = DataBase::getInstance() -> sendQuerry(helpQuerry);
+
+    int n_int = n.toInt();
+    if (upd == "+") {
+        helpStatistic.replace(n_int - 1, 1, "1");
+        QString querry =
+            QString("UPDATE data SET stat = '%1' WHERE login = '%2';").arg(helpStatistic).arg(log);
+        QString result = DataBase::getInstance()->sendQuerry(querry);
+        qDebug() << "result "<< result;
+    }
+    else if (upd == "-"){
+        helpStatistic.replace(n_int - 1, 1, "0");
+        QString querry =
+            QString("UPDATE data SET stat = '%1' WHERE login = '%2';").arg(helpStatistic).arg(log);
+        QString result = DataBase::getInstance()->sendQuerry(querry);
+    }
+
+
+}
+
+
+QString statisticBd(QString log){
+    QString querry =
+        QString("SELECT stat FROM data WHERE login = '%1';").arg(log);
+
+    QString result = DataBase::getInstance()->sendQuerry(querry);
+    return result;
 }

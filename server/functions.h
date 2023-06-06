@@ -36,4 +36,8 @@ QString auth(QString log, QString pas);
  */
 QString reg(QString log, QString pas, QString mail);
 
+QString updstat(QString log, QString n, QString upd);
+QString statisticBd(QString log);
+
 #endif // FUNCTIONS_H
+

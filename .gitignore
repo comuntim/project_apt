@@ -3,4 +3,10 @@
 /build-server-Desktop_Qt_6_4_2_MinGW_64_bit-Profile/
 /build-server-Desktop_Qt_6_4_2_MinGW_64_bit-Release/
 
+/build-Client-Desktop_Qt_6_4_2_MinGW_64_bit-Debug/
+/build-Client-Desktop_Qt_6_4_2_MinGW_64_bit-Profile/
+/build-Client-Desktop_Qt_6_4_2_MinGW_64_bit-Release/
+
+
 /server/server.pro.user
+/client/Client.pro.user

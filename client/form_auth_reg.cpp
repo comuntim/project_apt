@@ -2,8 +2,8 @@
 #include "ui_form_auth_reg.h"
 #include "sendtohost.h"
 
-static QString serv_addr = "127.0.0.1";
-const int serv_port = 33333;
+//static QString serv_addr = "127.0.0.1";
+//const int serv_port = 33333;
 
 
 Form_auth_reg::Form_auth_reg(QWidget *parent) :
@@ -13,11 +13,8 @@ Form_auth_reg::Form_auth_reg(QWidget *parent) :
     ui->setupUi(this);
     ui->lineEdit_mail->setVisible(false);
     ui->pushButton_cancle->setVisible(false);
-
-    socket = new QTcpSocket(this);
-        connect(socket, SIGNAL(slotClientRead()),this,SLOT(slotClientRead()));
-        connect(socket, SIGNAL(slotDisconnected()),this,SLOT(slotDisconnected()));
-    socket->connectToHost(serv_addr, serv_port);
+    Data = sendToHost::getInstance() -> readMess();
+    qDebug() << "data:" << Data;
 }
 
 Form_auth_reg::~Form_auth_reg()
@@ -25,13 +22,13 @@ Form_auth_reg::~Form_auth_reg()
     delete ui;
 }
 
-void Form_auth_reg::slotDisconnected() {
-    socket->deleteLater();
-}
+//void Form_auth_reg::slotDisconnected() {
+//    socket->deleteLater();
+//}
 
-void Form_auth_reg::slotClientRead() {
+//void Form_auth_reg::slotClientRead() {
 
-}
+//}
 
 
 
@@ -66,8 +63,7 @@ void Form_auth_reg::on_pushButton_cancle_clicked()
 
 void Form_auth_reg::on_pushButton_enter_clicked()
 {
-    Data = socket->readAll();
-    qDebug() << "data:" << Data;
+
     QString user_log = ui->lineEdit_log->text();
     QString user_pass = ui->lineEdit_pass->text();
 
@@ -75,13 +71,18 @@ void Form_auth_reg::on_pushButton_enter_clicked()
     if (ui->lineEdit_mail->isVisible()){
         QString user_mail = ui->lineEdit_mail->text();
         registration(user_log, user_pass, user_mail);
+        Data = sendToHost::getInstance() -> readMess();
+        qDebug() << "data:" << Data;
         ui->lineEdit_mail->setVisible(false);
         ui->pushButton_cancle->setVisible(false);
     }
     else {
         authorization(user_log, user_pass);
+        Data = sendToHost::getInstance() -> readMess();
+        qDebug() << "data:" << Data;
         emit return_autrh_reg();
         hide();
     }
+
 }
 

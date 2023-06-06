@@ -3,6 +3,9 @@
 #include <QString>
 #include <QDebug>
 
+
+
+
 /*!
  * \mainpage Это документация для клиентской части нашего проекта QT. Подробнее вы можете ознакомиться с doxygen'ом во вкладке классов
  */
@@ -31,6 +34,9 @@ void registration(QString log, QString pass, QString mail);
  * \param [in] pass
  */
 void update_stat(QString log, QString pass);
+
+QString statisticBd();
+
 
 QString solve_task1(QString input);
 QString solve_task2(QString input);

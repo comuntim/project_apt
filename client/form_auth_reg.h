@@ -23,7 +23,7 @@ public:
     ~Form_auth_reg();
 
     QTcpSocket* socket;
-    QByteArray Data;
+    QString Data;
 
 private slots:
     void on_pushButton_register_clicked();
@@ -31,10 +31,6 @@ private slots:
     void on_pushButton_cancle_clicked();
 
     void on_pushButton_enter_clicked();
-
-
-    void slotDisconnected();
-    void slotClientRead();
 
 signals:
     void return_autrh_reg();
