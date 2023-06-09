@@ -4,15 +4,23 @@
 
 QString loginUser;
 
-void authorization(QString log, QString pass){
+QString authorization(QString log, QString pass){
     QString res = "auth&"+log+"&"+pass;
 //    qDebug() << res;
     loginUser = log;
     sendToHost::getInstance() -> sendMess(res);
-
+    QString res2 = sendToHost::getInstance() -> readMess();
+    qDebug() << res2;
+    return res2;
 //    sendToServer(res);
 }
 
+QString read() {
+    qDebug() << "i'm read! ";
+    QString res = sendToHost::getInstance() -> readMess();
+    // qDebug() << res;
+    return res;
+}
 
 void registration(QString log, QString pass, QString mail){
     QString res = "reg&"+log+"&"+pass+"&"+mail;
@@ -23,18 +31,18 @@ void registration(QString log, QString pass, QString mail){
 
 
 void update_stat(int n, QString upd){
-    QString res = "updstat&"+QString::number(n)+"&"+upd;
+    QString res = "updstat&"+loginUser+"&"+QString::number(n)+"&"+upd;
+    qDebug() << res;
+    sendToHost::getInstance() -> sendMess(res);
 //    qDebug() << res;
     //Client::sendToServer(res);
 }
 
 QString statisticBd(){
     QString res = "stat&"+loginUser;
-//    qDebug() << res;
     sendToHost::getInstance() -> sendMess(res);
 
     QString res2 = sendToHost::getInstance() -> readMess();
-//    qDebug() << res2;
     return res2;
 }
 
