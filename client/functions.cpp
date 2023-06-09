@@ -2,29 +2,63 @@
 #include "form_auth_reg.h"
 #include "sendtohost.h"
 
+QString loginUser;
 
-void authorization(QString log, QString pass){
+QString authorization(QString log, QString pass){
     QString res = "auth&"+log+"&"+pass;
-    qDebug() << res;
-    sendToHost::getInstance() -> sendClient(res);
-
+//    qDebug() << res;
+    loginUser = log;
+    sendToHost::getInstance() -> sendMess(res);
+    QString res2 = sendToHost::getInstance() -> readMess();
+    qDebug() << res2;
+    return res2;
 //    sendToServer(res);
 }
 
+QString read() {
+    qDebug() << "i'm read! ";
+    QString res = sendToHost::getInstance() -> readMess();
+    // qDebug() << res;
+    return res;
+}
 
 void registration(QString log, QString pass, QString mail){
     QString res = "reg&"+log+"&"+pass+"&"+mail;
-    qDebug() << res;
-    sendToHost::getInstance() -> sendClient(res);
+//    qDebug() << res;
+    sendToHost::getInstance() -> sendMess(res);
     //Client::sendToServer(res);
 }
 
 
 void update_stat(int n, QString upd){
-    QString res = "updstat&"+QString::number(n)+"&"+upd;
+    QString res = "updstat&"+loginUser+"&"+QString::number(n)+"&"+upd;
     qDebug() << res;
+    sendToHost::getInstance() -> sendMess(res);
+//    qDebug() << res;
     //Client::sendToServer(res);
 }
+
+QString statisticBd(){
+    QString res = "stat&"+loginUser;
+    sendToHost::getInstance() -> sendMess(res);
+
+    QString res2 = sendToHost::getInstance() -> readMess();
+    return res2;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 QString solve_task1(QString input){
     return "anc1";
@@ -85,3 +119,5 @@ void check_Task(int task_number, QString answer, QString input){
         update_stat(task_number, "-");
 
 }
+
+

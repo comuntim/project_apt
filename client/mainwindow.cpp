@@ -73,9 +73,9 @@ void MainWindow::on_actionTask3_triggered()
 
 void MainWindow::on_pushButton_statistic_clicked()
 {
+    QString res = statisticBd();
     QMessageBox msg_box_stat;
-    msg_box_stat.setText("Statistics: \n task1: \n task2: \n task3: ");
+    QString text = QString("Statistics: \n task1:'%1' \n task2:'%2' \n task3:'%3' ").arg(res[0]).arg(res[1]).arg(res[2]);
+    msg_box_stat.setText(text);
     msg_box_stat.exec();
-
 }
-
