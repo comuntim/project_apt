@@ -7,6 +7,7 @@ QT += sql
 
 CONFIG += c++11 console # Конфигурация: версия с++ и тип приложения
 CONFIG -= app_bundle
+CONFIG += debug
 
 DEFINES += QT_DEPRECATED_WARNINGS # Игнорирование WARNING'ов при запуске
 

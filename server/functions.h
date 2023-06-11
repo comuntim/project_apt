@@ -4,6 +4,8 @@
 #include <QString>
 #include "database.h"
 #include <QStringList>
+#include <iostream>
+
 
 /*!
  * \mainpage Это документация для серверной части нашего проекта QT. Подробнее вы можете ознакомиться с doxygen'ом во вкладке классов
@@ -37,7 +39,31 @@ QString auth(QString log, QString pas);
 QString reg(QString log, QString pas, QString mail);
 
 QString updstat(QString log, QString n, QString upd);
+QString task_number_2(int beginning, int ending);
 QString statisticBd(QString log);
+
+struct Node
+{
+    int inf;
+    Node* next;
+};
+
+void push(Node*& st, int dat);
+int pop(Node*& st);
+int peek(Node* st);
+
+void add(Node*& list, int data);
+void del(Node*& l, int key);
+
+int eiler(Node** gr, int num);
+void eiler_path(Node** gr, QString& cycle);
+QString task_number_3(int termin);
+
+int printMST(int parent[], int graph[][4], int V);
+int findMinKey(int key[], bool mstSet[], int V);
+QString primMST(int graph[][4], int V);
+
+QString task_number_1(int T);
 
 #endif // FUNCTIONS_H
 

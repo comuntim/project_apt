@@ -17,7 +17,7 @@
  * \param [in] log
  * \param [in] pass
  */
-void authorization(QString log, QString pass);
+QString authorization(QString log, QString pass);
 /*!
  * \class registration
  * \brief registration - регистрация пользователя
@@ -37,6 +37,7 @@ void update_stat(QString log, QString pass);
 
 QString statisticBd();
 
+QString read();
 
 QString solve_task1(QString input);
 QString solve_task2(QString input);

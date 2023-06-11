@@ -1,4 +1,4 @@
-#ifndef DATABASE_H
+/*#ifndef DATABASE_H
 #define DATABASE_H
 
 #include <QDebug>
@@ -17,11 +17,6 @@ class DataBaseDestroyer
         void initialize(DataBase * p){db_pointer = p;}
 };
 
-/*!
- * \class DataBase
- * \brief DataBase class - синглтон для баз данных
- * Создает единичный экземпляр для обращения к базе данных
- */
 class DataBase
 {
     private:
@@ -83,4 +78,46 @@ class DataBase
 };
 
 
+#endif // DATABASE_H */
+
+#ifndef DATABASE_H
+#define DATABASE_H
+
+#include <QDebug>
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QSqlError>
+#include <QSqlRecord>
+
+class DataBase;
+class DataBaseDestroyer
+{
+private:
+    DataBase * db_pointer;
+public:
+    ~DataBaseDestroyer() { delete db_pointer;}
+    void initialize(DataBase * p){db_pointer = p;}
+};
+
+class DataBase
+{
+private:
+    static DataBase * p_instance;
+    static DataBaseDestroyer destroyer;
+    QSqlDatabase db;
+protected:
+    DataBase();
+    DataBase(const DataBase& ) = delete;
+    DataBase& operator=(DataBase &) = delete;
+    ~DataBase();
+
+    friend class DataBaseDestroyer;
+public:
+    static DataBase* getInstance();
+    // далее функция для выполнения запросов к БД
+    QString sendQuery(const QString& queryStr);
+
+};
+
 #endif // DATABASE_H
+
