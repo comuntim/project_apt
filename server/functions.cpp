@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <stdlib.h>
+#include <algorithm>
 using namespace std;
 
 QString parsing(QString inputString){
@@ -378,4 +379,117 @@ QString task_number_1(int T) {
     QString ret = primMST(cost, V);
     qWarning() << ret;
     return ret;
+}
+
+class Graph {
+    int V; // Количество вершин графа
+    vector<vector<int>> adjList; // Список смежности
+
+    // Вспомогательная функция для поиска всех независимых множеств в графе
+    void findAllIndependentSets(vector<int>& currentSet, vector<bool>& visited, vector<vector<int>>& independentSets) {
+        // Проверяем каждую вершину графа
+        for (int v = 0; v < V; ++v) {
+            if (!visited[v]) {
+                // Проверяем, является ли текущая вершина независимой с уже выбранными вершинами
+                bool independent = true;
+                for (int i = 0; i < currentSet.size(); ++i) {
+                    if (adjList[v][currentSet[i]]) {
+                        independent = false;
+                        break;
+                    }
+                }
+
+                if (independent) {
+                    // Добавляем текущую вершину в текущее независимое множество
+                    currentSet.push_back(v);
+                    visited[v] = true;
+
+                    // Рекурсивно ищем остальные вершины
+                    findAllIndependentSets(currentSet, visited, independentSets);
+
+                    // Удаляем текущую вершину из текущего независимого множества
+                    currentSet.pop_back();
+                    visited[v] = false;
+                }
+            }
+        }
+
+        // Проверяем, является ли текущее независимое множество максимальным и наибольшим
+        bool isMaximal = true;
+        bool isLargest = true;
+        for (const auto& set : independentSets) {
+            if (includes(set.begin(), set.end(), currentSet.begin(), currentSet.end())) {
+                isMaximal = false;
+                if (set.size() > currentSet.size()) {
+                    isLargest = false;
+                    break;
+                }
+            }
+            else if (includes(currentSet.begin(), currentSet.end(), set.begin(), set.end())) {
+                isLargest = false;
+            }
+        }
+
+        // Если текущее независимое множество максимальное и наибольшее, добавляем его в список
+        if (isMaximal && isLargest) {
+            independentSets.push_back(currentSet);
+        }
+    }
+
+public:
+    // Конструктор класса Graph
+    Graph(vector<Edge>& edges, int numVertices) {
+        V = numVertices;
+        adjList.resize(V, vector<int>(V, 0));
+
+        // Создаем список смежности графа
+        for (auto& edge : edges) {
+            adjList[edge.src - 1][edge.dest - 1] = 1;
+            adjList[edge.dest - 1][edge.src - 1] = 1;
+        }
+    }
+
+    // Функция для поиска всех максимальных и наибольших независимых множеств
+    vector<vector<int>> findIndependentSets() {
+        vector<vector<int>> independentSets; // Независимые множества
+        vector<int> currentSet; // Текущее независимое множество
+        vector<bool> visited(V, false); // Массив для отслеживания посещенных вершин
+
+        findAllIndependentSets(currentSet, visited, independentSets);
+
+        return independentSets;
+    }
+};
+
+QString task_number_4(int R){
+    QString result = "";
+    vector<Edge> edges = {{1, 2}, {1, 4}, {1, 5}, {1, 7}, {2, 3}, {2, 5},
+                          {2, 7}, {3, 5}, {4, 5}, {4, 6}, {5, 6}, {6, 7}};
+    int numVertices = R;
+
+    // Создаем объект класса Graph и выполняем поиск независимых множеств
+    Graph graph(edges, numVertices);
+    vector<vector<int>> independentSets = graph.findIndependentSets();
+
+    // Выводим только максимальные и наибольшие независимые множества
+    for (const auto& set : independentSets) {
+        bool isMaximal = true;
+        bool isLargest = true;
+        for (const auto& otherSet : independentSets) {
+            if (set != otherSet && includes(otherSet.begin(), otherSet.end(), set.begin(), set.end())) {
+                isMaximal = false;
+                break;
+            }
+            else if (set != otherSet && includes(set.begin(), set.end(), otherSet.begin(), otherSet.end())) {
+                isLargest = false;
+            }
+        }
+        if (isMaximal && isLargest) {
+            for (const auto& vertex : set) {
+                result +=  QString::number(vertex + 1);
+            }
+        }
+    }
+    qWarning() << result;
+    return result;
 }

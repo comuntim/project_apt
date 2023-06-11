@@ -62,8 +62,15 @@ QString task_number_3(int termin);
 int printMST(int parent[], int graph[][4], int V);
 int findMinKey(int key[], bool mstSet[], int V);
 QString primMST(int graph[][4], int V);
-
 QString task_number_1(int T);
+
+struct Edge {
+    int src;
+    int dest;
+};
+
+QString task_number_4(int R);
+
 
 #endif // FUNCTIONS_H
 
